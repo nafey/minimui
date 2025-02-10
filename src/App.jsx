@@ -4,7 +4,8 @@ import {} from "recharts";
 import Sidebar from "./Sidebar";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import { ChevronLeft } from "lucide-react";
+// import { ChevronLeft } from "lucide-react";
+import CollapseButton from "./CollapseButton";
 
 function App() {
   return (
@@ -12,11 +13,7 @@ function App() {
       {/* <Navbar /> */}
       <Sidebar />
       <div className="flex-1 p-8 flex flex-col justify-start gap-16">
-        <div className="flex justify-start">
-          <div className="flex items-center justify-center w-8 h-8 hover:bg-neutral-800 rounded-lg cursor-pointer">
-            <ChevronLeft color="white" size={18} />
-          </div>
-        </div>
+        {/* <CollapseButton /> */}
         <LineChart2 />
       </div>
     </div>
