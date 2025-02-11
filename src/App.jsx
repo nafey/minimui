@@ -5,7 +5,6 @@ import Sidebar from "./Sidebar";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 // import { ChevronLeft } from "lucide-react";
-import CollapseButton from "./CollapseButton";
 
 function App() {
   return (
