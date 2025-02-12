@@ -78,7 +78,7 @@ for (let i = 0; i < 60; i++) {
 
 console.log(labels);
 
-const LineChart2 = () => {
+const MyChart = () => {
   useEffect(() => {
     const fetchData = async () => {};
 
@@ -175,4 +175,4 @@ const LineChart2 = () => {
   );
 };
 
-export default LineChart2;
+export default MyChart;

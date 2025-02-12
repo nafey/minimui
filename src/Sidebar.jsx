@@ -1,17 +1,12 @@
-// Sidebar.js
-// import React from "react";
-
 import CollapseButton from "./CollapseButton";
 import DashboardItem from "./DashboardItem";
-import { useState, useEffect } from "react";
-
-let selectedDash = 0;
+import { useState, useEffect, useContext } from "react";
+import { MyContext } from "./MyContext";
 
 const getDashboards = async () => {
   const response = await fetch("/api/dashboards/", {});
   const result = await response.json();
 
-  // console.log(result);
   if (!(result && result.data)) {
     return [];
   }
@@ -22,6 +17,7 @@ const getDashboards = async () => {
 const Sidebar = () => {
   const [show, setShow] = useState(true);
   const [dashlist, setDashlist] = useState([]);
+  const { dashId, setDashId } = useContext(MyContext);
 
   const onClick = () => {
     setShow(!show);
@@ -33,14 +29,17 @@ const Sidebar = () => {
       console.log(data);
       setDashlist(data);
 
-      selectedDash = localStorage.getItem("selectedDash");
-      if (!selectedDash && data.length > 0) {
-        localStorage.setItem("selectedDash", data[0].id);
-        selectedDash = data[0].id;
+      if (!dashId) {
+        let selectedDash = localStorage.getItem("selectedDash");
+        if (!selectedDash && data.length > 0) {
+          localStorage.setItem("selectedDash", data[0].id);
+          selectedDash = data[0].id;
+        }
+
+        setDashId(selectedDash);
       }
-      console.log(selectedDash);
     })();
-  }, []);
+  }, [dashId, setDashId]);
 
   const open = (
     <div className="w-64 h-full text-left text-white p-4 border-r border-neutral-700 border-1 ">
@@ -49,18 +48,14 @@ const Sidebar = () => {
         <CollapseButton onClick={onClick} left={show} />
       </h2>
       <ul className="flex flex-col gap-2 mt-6">
-        {/* <li className="py-2 cursor-pointer">Home</li> */}
         {dashlist &&
           dashlist.map((item, i) => {
             return (
               <DashboardItem
                 item={item}
-                isSelected={item.id == selectedDash}
+                isSelected={item.id == dashId}
                 key={i}
               />
-              // <li className="py-2 cursor-pointer" key={i}>
-              //   {item.name}
-              // </li>
             );
           })}
       </ul>

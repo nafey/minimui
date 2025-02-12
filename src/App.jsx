@@ -1,17 +1,14 @@
-import LineChart2 from "./LineChart";
+// import MyChart from "./MyChart";
+import Page from "./Page";
 import "./App.css";
-import {} from "recharts";
 import Sidebar from "./Sidebar";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-// import { ChevronLeft } from "lucide-react";
 
 function App() {
   return (
     <div className="flex h-full">
       <Sidebar />
       <div className="flex-1 p-8 flex flex-col justify-start gap-16">
-        <LineChart2 />
+        <Page />
       </div>
     </div>
   );
