@@ -9,10 +9,8 @@ import Sidebar from "./Sidebar";
 function App() {
   return (
     <div className="flex h-full">
-      {/* <Navbar /> */}
       <Sidebar />
       <div className="flex-1 p-8 flex flex-col justify-start gap-16">
-        {/* <CollapseButton /> */}
         <LineChart2 />
       </div>
     </div>

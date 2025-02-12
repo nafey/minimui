@@ -2,7 +2,10 @@
 // import React from "react";
 
 import CollapseButton from "./CollapseButton";
+import DashboardItem from "./DashboardItem";
 import { useState, useEffect } from "react";
+
+let selectedDash = 0;
 
 const getDashboards = async () => {
   const response = await fetch("/api/dashboards/", {});
@@ -29,6 +32,13 @@ const Sidebar = () => {
       let data = await getDashboards();
       console.log(data);
       setDashlist(data);
+
+      selectedDash = localStorage.getItem("selectedDash");
+      if (!selectedDash && data.length > 0) {
+        localStorage.setItem("selectedDash", data[0].id);
+        selectedDash = data[0].id;
+      }
+      console.log(selectedDash);
     })();
   }, []);
 
@@ -38,14 +48,19 @@ const Sidebar = () => {
         <div className="mr-16">Minimalytics</div>
         <CollapseButton onClick={onClick} left={show} />
       </h2>
-      <ul className="mt-4">
+      <ul className="flex flex-col gap-2 mt-6">
         {/* <li className="py-2 cursor-pointer">Home</li> */}
         {dashlist &&
           dashlist.map((item, i) => {
             return (
-              <li className="py-2 cursor-pointer" key={i}>
-                {item.name}
-              </li>
+              <DashboardItem
+                item={item}
+                isSelected={item.id == selectedDash}
+                key={i}
+              />
+              // <li className="py-2 cursor-pointer" key={i}>
+              //   {item.name}
+              // </li>
             );
           })}
       </ul>
