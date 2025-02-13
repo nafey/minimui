@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { ChevronLeft } from "lucide-react";
 import { ChevronRight } from "lucide-react";
 

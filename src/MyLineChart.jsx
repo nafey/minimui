@@ -1,5 +1,4 @@
 // LineChart.js
-import { useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -23,11 +22,11 @@ ChartJS.register(
   Legend,
 );
 
-let data = [];
-
 ChartJS.register({
   id: "uniqueid5", //typescript crashes without id
   afterDraw: function (chart) {
+    if (!chart) return;
+    if (!chart["tooltip"]) return;
     if (chart.tooltip._active && chart.tooltip._active.length) {
       const activePoint = chart.tooltip._active[0];
       const ctx = chart.ctx;
@@ -46,49 +45,13 @@ ChartJS.register({
   },
 });
 
-try {
-  const response = await fetch("/api/stat/daily/", {
-    method: "POST",
-    body: JSON.stringify({
-      event: "DUMMY_EVENT",
-    }),
-  });
-
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  const result = await response.json();
-
-  data = result.data;
-
-  const counts = data.map((item) => item.count);
-  data = counts;
-  data.reverse();
-} catch (err) {
-  console.log(err);
-  // setError(err.message);
-} finally {
-  // setLoading(false);
-}
-
-const labels = [];
-for (let i = 0; i < 60; i++) {
-  labels.push(i);
-}
-
-const MyChart = () => {
-  useEffect(() => {
-    const fetchData = async () => {};
-
-    fetchData();
-  }, []);
-
-  const d = {
+const MyLineChart = ({ count, labels }) => {
+  let data = {
     labels: labels,
     datasets: [
       {
         label: "My First Dataset",
-        data: data,
+        data: count,
         fill: false,
         borderColor: "rgb(75, 192, 192)",
         tension: 0.1,
@@ -97,7 +60,7 @@ const MyChart = () => {
     ],
   };
 
-  const options = {
+  let options = {
     interaction: {
       mode: "index",
       intersect: false,
@@ -112,21 +75,10 @@ const MyChart = () => {
           color: "white",
         },
       },
-      // title: {
-      //   display: true,
-      //   text: "Dark Themed Line Chart Example",
-      //   color: "white", // Title text color
+      // tooltip: {
+      //   titleColor: "white",
+      //   bodyColor: "white",
       // },
-      tooltip: {
-        titleColor: "white",
-        bodyColor: "white",
-        // position: "vertical", // Position the tooltip nearest to the point
-        // callbacks: {
-        //   label: function (context) {
-        //     return `${context.dataset.label}: ${context.raw}`; // Customize tooltip label
-        //   },
-        // },
-      },
     },
     scales: {
       x: {
@@ -157,20 +109,22 @@ const MyChart = () => {
       },
     },
     backgroundColor: "black",
+    animation: false,
   };
 
   let style = {
     height: "200px",
-    width: "600px",
+    width: "99%",
+    // position: "relative",
   };
 
   return (
     <>
       <div style={style}>
-        <Line data={d} options={options} />
+        <Line className="m-2" data={data} options={options} />
       </div>
     </>
   );
 };
 
-export default MyChart;
+export default MyLineChart;

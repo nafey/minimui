@@ -1,0 +1,62 @@
+import { useState, useEffect } from "react";
+import MyLineChart from "./MyLineChart";
+
+const GraphContainer = ({ item }) => {
+  const [labels, setLabels] = useState([]);
+  const [count, setCount] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      if (!item) return;
+
+      let event = item.event;
+      let period = item.period;
+
+      let path = "/api/stat/minutely/";
+
+      if (period === "DAILY") {
+        path = "/api/stat/daily/";
+      } else if (period === "HOURLY") {
+        path = "/api/stat/hourly/";
+      }
+
+      const response = await fetch(path, {
+        method: "POST",
+        body: JSON.stringify({
+          event: event,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const result = await response.json();
+      let data = result.data;
+
+      const counts = data.map((item) => item.count);
+      data = counts;
+      data.reverse();
+
+      // console.log(data);
+      setCount(data);
+
+      const labels = [];
+      for (let i = 0; i < 60; i++) {
+        labels.push(i);
+      }
+
+      setLabels(labels);
+    })();
+  }, [item, setCount, setLabels]);
+
+  // let itemText = JSON.stringify(item);
+
+  return (
+    <div className="flex flex-col gap-4 w-full h-72 border border-neutral-700 rounded-xl">
+      <div className="border-b p-4 border-neutral-700">{item.name}</div>
+      <MyLineChart count={count} labels={labels} />
+    </div>
+  );
+};
+
+export default GraphContainer;

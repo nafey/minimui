@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { MyContext } from "./MyContext";
+import GraphContainer from "./GraphContainer";
 
 const getDashboard = async (dashId) => {
   const response = await fetch("/api/dashboards/" + dashId, {});
@@ -28,23 +29,18 @@ const Page = () => {
 
         setDetails(dashData);
         setGraphs(dashGraphs);
-        // console.log(dashData);
-        // console.log(dashGraphs);
       }
     })();
   }, [dashId, setDetails, setGraphs]);
 
-  let dashText = JSON.stringify(details);
-  // let graphText = JSON.stringify(graphs);
-
   return (
     <div>
-      <div> Page {dashText} </div>
-      {graphs.map((item, i) => {
-        let itemText = JSON.stringify(item);
-
-        return <div key={i}>{itemText}</div>;
-      })}
+      <div className="mb-8">{details.name}</div>
+      <div className="flex flex-col gap-8">
+        {graphs.map((item, i) => {
+          return <GraphContainer key={i} item={item} />;
+        })}
+      </div>
       <div></div>
     </div>
   );
