@@ -44,7 +44,7 @@ const Sidebar = () => {
   const open = (
     <div className="w-64 h-full text-left text-white p-4 border-r border-neutral-700 border-1 ">
       <h2 className="flex text-lg justify-between">
-        <div className="mr-16">Minimalytics</div>
+        <div className="mr-16 select-none">Minimalytics</div>
         <CollapseButton onClick={onClick} left={show} />
       </h2>
       <ul className="flex flex-col gap-2 mt-6">

@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { MyContext } from "./MyContext";
 import GraphContainer from "./GraphContainer";
+import Sidebar from "./Sidebar";
 
 const getDashboard = async (dashId) => {
   const response = await fetch("/api/dashboards/" + dashId, {});
@@ -34,14 +35,19 @@ const Page = () => {
   }, [dashId, setDetails, setGraphs]);
 
   return (
-    <div>
-      <div className="mb-8">{details.name}</div>
-      <div className="flex flex-col gap-8">
-        {graphs.map((item, i) => {
-          return <GraphContainer key={i} item={item} />;
-        })}
+    <div className="flex h-screen max-w-screen">
+      <Sidebar />
+      <div className="flex-1 p-8 flex flex-col justify-start gap-16">
+        <div>
+          <div className="mb-8 ">{details.name}</div>
+          <div className="flex flex-col gap-8">
+            {graphs.map((item, i) => {
+              return <GraphContainer key={i} item={item} />;
+            })}
+          </div>
+          <div></div>
+        </div>
       </div>
-      <div></div>
     </div>
   );
 };

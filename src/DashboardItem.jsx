@@ -5,7 +5,8 @@ import { MyContext } from "./MyContext";
 const DashboardItem = ({ item, isSelected }) => {
   const { setDashId } = useContext(MyContext);
 
-  let className = "py-2 flex flex-row gap-4 cursor-pointer rounded-lg p-4 ";
+  let className =
+    "py-2 flex flex-row gap-4 cursor-pointer rounded-lg p-4 select-none";
   if (isSelected) {
     className += " bg-[#2D2D2D] ";
   } else {

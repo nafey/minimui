@@ -53,7 +53,9 @@ const GraphContainer = ({ item }) => {
 
   return (
     <div className="flex flex-col gap-4 w-full h-72 border border-neutral-700 rounded-xl">
-      <div className="border-b p-4 border-neutral-700">{item.name}</div>
+      <div className="border-b p-4 border-neutral-700 rounded-t-xl hover:bg-neutral-800 cursor-pointer select-none">
+        {item.name}
+      </div>
       <MyLineChart count={count} labels={labels} />
     </div>
   );
