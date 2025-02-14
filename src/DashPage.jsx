@@ -1,7 +1,8 @@
-import { useEffect, useState, useContext } from "react";
-import { MyContext } from "./MyContext";
+import { useEffect, useState } from "react";
+// import { MyContext } from "./MyContext";
 import GraphContainer from "./GraphContainer";
 import Sidebar from "./Sidebar";
+import { useParams } from "react-router";
 
 const getDashboard = async (dashId) => {
   const response = await fetch("/api/dashboards/" + dashId, {});
@@ -17,8 +18,9 @@ const getDashGraphs = async (dashId) => {
   return data;
 };
 
-const Page = () => {
-  const { dashId } = useContext(MyContext);
+const DashPage = () => {
+  let { dashId } = useParams();
+  // const { dashId } = useContext(MyContext);
   const [details, setDetails] = useState({});
   const [graphs, setGraphs] = useState([]);
 
@@ -37,6 +39,7 @@ const Page = () => {
   return (
     <div className="flex h-screen max-w-screen">
       <Sidebar />
+
       <div className="flex-1 p-8 flex flex-col justify-start gap-16">
         <div>
           <div className="mb-8 ">{details.name}</div>
@@ -52,4 +55,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default DashPage;

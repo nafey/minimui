@@ -1,7 +1,7 @@
 import CollapseButton from "./CollapseButton";
 import DashboardItem from "./DashboardItem";
-import { useState, useEffect, useContext } from "react";
-import { MyContext } from "./MyContext";
+import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router";
 
 const getDashboards = async () => {
   const response = await fetch("/api/dashboards/", {});
@@ -15,9 +15,9 @@ const getDashboards = async () => {
 };
 
 const Sidebar = () => {
+  let { dashId } = useParams();
   const [show, setShow] = useState(true);
   const [dashlist, setDashlist] = useState([]);
-  const { dashId, setDashId } = useContext(MyContext);
 
   const onClick = () => {
     setShow(!show);
@@ -26,25 +26,16 @@ const Sidebar = () => {
   useEffect(() => {
     (async () => {
       let data = await getDashboards();
-      console.log(data);
       setDashlist(data);
-
-      if (!dashId) {
-        let selectedDash = localStorage.getItem("selectedDash");
-        if (!selectedDash && data.length > 0) {
-          localStorage.setItem("selectedDash", data[0].id);
-          selectedDash = data[0].id;
-        }
-
-        setDashId(selectedDash);
-      }
     })();
-  }, [dashId, setDashId]);
+  });
 
   const open = (
     <div className="w-64 h-full text-left text-white p-4 border-r border-neutral-700 border-1 ">
       <h2 className="flex text-lg justify-between">
-        <div className="mr-16 select-none">Minimalytics</div>
+        <Link to="/">
+          <div className="mr-16 select-none">Minimalytics</div>
+        </Link>
         <CollapseButton onClick={onClick} left={show} />
       </h2>
       <ul className="flex flex-col gap-2 mt-6">
