@@ -11,41 +11,41 @@ import {
   Legend,
 } from "chart.js";
 
-// Register the necessary components
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-);
-
-ChartJS.register({
-  id: "uniqueid5", //typescript crashes without id
-  afterDraw: function (chart) {
-    if (!chart) return;
-    if (!chart["tooltip"]) return;
-    if (chart.tooltip._active && chart.tooltip._active.length) {
-      const activePoint = chart.tooltip._active[0];
-      const ctx = chart.ctx;
-      const x = activePoint.element.x;
-      const topY = chart.scales.y.top;
-      const bottomY = chart.scales.y.bottom;
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(x, topY);
-      ctx.lineTo(x, bottomY);
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = "#535353";
-      ctx.stroke();
-      ctx.restore();
-    }
-  },
-});
-
 const MyLineChart = ({ count, labels }) => {
+  // Register the necessary components
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+  );
+
+  ChartJS.register({
+    id: "uniqueid5", //typescript crashes without id
+    afterDraw: function (chart) {
+      if (!chart) return;
+      if (!chart["tooltip"]) return;
+      if (chart.tooltip._active && chart.tooltip._active.length) {
+        const activePoint = chart.tooltip._active[0];
+        const ctx = chart.ctx;
+        const x = activePoint.element.x;
+        const topY = chart.scales.y.top;
+        const bottomY = chart.scales.y.bottom;
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(x, topY);
+        ctx.lineTo(x, bottomY);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "#535353";
+        ctx.stroke();
+        ctx.restore();
+      }
+    },
+  });
+
   let data = {
     labels: labels,
     datasets: [

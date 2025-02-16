@@ -34,7 +34,7 @@ const DashPage = () => {
         setGraphs(dashGraphs);
       }
     })();
-  }, [dashId, setDetails, setGraphs]);
+  }, [dashId]);
 
   return (
     <div className="flex h-screen max-w-screen">

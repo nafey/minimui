@@ -1,18 +1,7 @@
-import CollapseButton from "./CollapseButton";
+import BackButton from "./BackButton";
 import DashboardItem from "./DashboardItem";
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
-
-const getDashboards = async () => {
-  const response = await fetch("/api/dashboards/", {});
-  const result = await response.json();
-
-  if (!(result && result.data)) {
-    return [];
-  }
-
-  return result.data;
-};
 
 const Sidebar = () => {
   let { dashId } = useParams();
@@ -23,12 +12,23 @@ const Sidebar = () => {
     setShow(!show);
   };
 
+  const getDashboards = async () => {
+    const response = await fetch("/api/dashboards/", {});
+    const result = await response.json();
+
+    if (!(result && result.data)) {
+      return [];
+    }
+
+    return result.data;
+  };
+
   useEffect(() => {
     (async () => {
       let data = await getDashboards();
       setDashlist(data);
     })();
-  });
+  }, []);
 
   const open = (
     <div className="w-64 h-full text-left text-white p-4 border-r border-neutral-700 border-1 ">
@@ -36,7 +36,7 @@ const Sidebar = () => {
         <Link to="/">
           <div className="mr-16 select-none">Minimalytics</div>
         </Link>
-        <CollapseButton onClick={onClick} left={show} />
+        <BackButton onClick={onClick} left={show} />
       </h2>
       <ul className="flex flex-col gap-2 mt-6">
         {dashlist &&
@@ -55,7 +55,7 @@ const Sidebar = () => {
 
   const closed = (
     <div className="p-4">
-      <CollapseButton onClick={onClick} left={show} />
+      <BackButton onClick={onClick} left={show} />
     </div>
   );
 

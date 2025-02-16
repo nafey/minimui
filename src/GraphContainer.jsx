@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router";
 import MyLineChart from "./MyLineChart";
 
 const GraphContainer = ({ item }) => {
+  // console.log(item);
+
   const [labels, setLabels] = useState([]);
   const [count, setCount] = useState([]);
 
@@ -47,15 +50,17 @@ const GraphContainer = ({ item }) => {
 
       setLabels(labels);
     })();
-  }, [item, setCount, setLabels]);
+  }, [item]);
 
   // let itemText = JSON.stringify(item);
 
   return (
     <div className="flex flex-col gap-4 w-full h-72 border border-neutral-700 rounded-xl">
-      <div className="border-b p-4 border-neutral-700 rounded-t-xl hover:bg-neutral-800 cursor-pointer select-none">
-        {item.name}
-      </div>
+      <Link to={""}>
+        <div className="border-b p-4 border-neutral-700 rounded-t-xl hover:bg-neutral-800 cursor-pointer select-none">
+          {item.name}
+        </div>
+      </Link>
       <MyLineChart count={count} labels={labels} />
     </div>
   );
