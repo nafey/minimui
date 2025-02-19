@@ -1,4 +1,4 @@
-import BackButton from "./BackButton";
+import BackButton from "./../ui/BackButton";
 import DashboardItem from "./DashboardItem";
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";

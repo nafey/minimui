@@ -1,7 +1,7 @@
-import "./App.css";
-import DashPage from "./DashPage";
-import HomePage from "./HomePage";
-import GraphPage from "./GraphPage";
+import "./../App.css";
+import DashPage from "./dash/DashPage";
+import HomePage from "./home/HomePage";
+import GraphPage from "./graph/GraphPage";
 import { BrowserRouter, Routes, Route, Link } from "react-router";
 
 function App() {

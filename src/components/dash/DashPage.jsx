@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 // import { MyContext } from "./MyContext";
-import GraphContainer from "./GraphContainer";
+import GraphContainer from "../graph/GraphContainer";
 import Sidebar from "./Sidebar";
 import { useParams } from "react-router";
 

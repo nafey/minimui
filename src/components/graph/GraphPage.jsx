@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import GraphContainer from "./GraphContainer";
-import BackButton from "./BackButton";
-import Button from "./Button";
+import BackButton from "../ui/BackButton";
+import Button from "../ui/Button";
 
 const GraphPage = () => {
   const { graphId } = useParams();
