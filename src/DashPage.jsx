@@ -20,7 +20,7 @@ const getDashGraphs = async (dashId) => {
 
 const DashPage = () => {
   let { dashId } = useParams();
-  // const { dashId } = useContext(MyContext);
+
   const [details, setDetails] = useState({});
   const [graphs, setGraphs] = useState([]);
 

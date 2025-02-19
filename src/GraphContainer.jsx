@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import MyLineChart from "./MyLineChart";
 
 const GraphContainer = ({ item }) => {
-  // console.log(item);
-
   const [labels, setLabels] = useState([]);
   const [count, setCount] = useState([]);
+
+  const { dashId } = useParams();
+  const { id } = { ...item };
 
   useEffect(() => {
     (async () => {
@@ -40,7 +41,6 @@ const GraphContainer = ({ item }) => {
       data = counts;
       data.reverse();
 
-      // console.log(data);
       setCount(data);
 
       const labels = [];
@@ -52,11 +52,15 @@ const GraphContainer = ({ item }) => {
     })();
   }, [item]);
 
-  // let itemText = JSON.stringify(item);
+  if (!item) {
+    return <div>Loading</div>;
+  }
+
+  let link = "/dashboard/" + dashId + "/graph/" + id;
 
   return (
     <div className="flex flex-col gap-4 w-full h-72 border border-neutral-700 rounded-xl">
-      <Link to={""}>
+      <Link to={link}>
         <div className="border-b p-4 border-neutral-700 rounded-t-xl hover:bg-neutral-800 cursor-pointer select-none">
           {item.name}
         </div>

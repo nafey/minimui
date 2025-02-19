@@ -11,13 +11,13 @@ export default function BackButton({ onClick, left, text }) {
 
   return (
     <div
-      className="flex flex-row items-center gap-3 hover:bg-neutral-800 rounded-lg cursor-pointer p-1.5"
+      className="flex flex-row items-center gap-2 hover:bg-neutral-800 rounded-lg cursor-pointer p-1.5"
       onClick={onClick}
     >
       <div className="flex items-center justify-center ">
         <Icon />
       </div>
-      <div className="mr-2">{text ? text : "Go Back"}</div>
+      {text ? <div className="text-sm">{text}</div> : <></>}
     </div>
   );
 }

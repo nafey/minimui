@@ -36,7 +36,7 @@ const Sidebar = () => {
         <Link to="/">
           <div className="mr-16 select-none">Minimalytics</div>
         </Link>
-        <BackButton onClick={onClick} left={show} />
+        <BackButton onClick={onClick} left={show} text={""} />
       </h2>
       <ul className="flex flex-col gap-2 mt-6">
         {dashlist &&
