@@ -4,37 +4,37 @@ import GraphContainer from "../graph/GraphContainer";
 import Sidebar from "./Sidebar";
 import { useParams } from "react-router";
 
-const getDashboard = async (dashId) => {
-  const response = await fetch("/api/dashboards/" + dashId, {});
+const getDashboard = async (dashboardId) => {
+  const response = await fetch("/api/dashboards/" + dashboardId, {});
   const result = await response.json();
   const data = result.data;
   return data;
 };
 
-const getDashGraphs = async (dashId) => {
-  const response = await fetch("/api/dashboards/" + dashId + "/graphs/", {});
-  const result = await response.json();
-  const data = result.data;
-  return data;
-};
+// const getDashGraphs = async (dashId) => {
+//   const response = await fetch("/api/dashboards/" + dashId + "/graphs/", {});
+//   const result = await response.json();
+//   const data = result.data;
+//   return data;
+// };
 
 const DashPage = () => {
-  let { dashId } = useParams();
+  let { dashboardId } = useParams();
 
   const [details, setDetails] = useState({});
   const [graphs, setGraphs] = useState([]);
 
   useEffect(() => {
     (async () => {
-      if (dashId) {
-        let dashData = await getDashboard(dashId);
-        let dashGraphs = await getDashGraphs(dashId);
+      if (dashboardId) {
+        let dashData = await getDashboard(dashboardId);
+        let dashGraphs = dashData?.graphs ? dashData.graphs : [];
 
         setDetails(dashData);
         setGraphs(dashGraphs);
       }
     })();
-  }, [dashId]);
+  }, [dashboardId]);
 
   return (
     <div className="flex h-screen max-w-screen">

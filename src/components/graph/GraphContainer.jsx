@@ -6,7 +6,7 @@ const GraphContainer = ({ item }) => {
   const [labels, setLabels] = useState([]);
   const [count, setCount] = useState([]);
 
-  const { dashId } = useParams();
+  const { dashboardId } = useParams();
   const { id } = { ...item };
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const GraphContainer = ({ item }) => {
       let event = item.event;
       let period = item.period;
 
-      let path = "/api/stat/minutely/";
+      let path = "/api/stat/minutes/";
 
       if (period === "DAILY") {
         path = "/api/stat/daily/";
@@ -34,7 +34,9 @@ const GraphContainer = ({ item }) => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+
       const result = await response.json();
+
       let data = result.data;
 
       const counts = data.map((item) => item.count);
@@ -56,7 +58,7 @@ const GraphContainer = ({ item }) => {
     return <div>Loading</div>;
   }
 
-  let link = "/dashboard/" + dashId + "/graph/" + id;
+  let link = "/dashboard/" + dashboardId + "/graph/" + id;
 
   return (
     <div className="flex flex-col gap-4 w-full h-72 border border-neutral-700 rounded-xl">

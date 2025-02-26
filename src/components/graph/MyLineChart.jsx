@@ -93,6 +93,7 @@ const MyLineChart = ({ count, labels }) => {
         },
       },
       y: {
+        min: 0,
         grid: {
           color: "rgba(255, 255, 255, 0.1)",
         },
