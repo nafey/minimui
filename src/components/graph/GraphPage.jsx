@@ -44,7 +44,6 @@ const GraphPage = () => {
       let values = data.map((item) => [item.event, item.event]);
       setEventList(values);
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dashboardId, graphId]);
 
   const handleNameChange = (e) => {
@@ -115,9 +114,7 @@ const GraphPage = () => {
       </div>
       <div className="flex flex-row gap-4">
         <div className="flex flex-col gap-4 w-80">
-          <div className="flex flex-row justify-between">
-            <div className="text-lg select-none">Graph Properties</div>
-          </div>
+          <div className="text-lg select-none">Graph Properties</div>
           <Input
             title={"Name"}
             value={graphEdit.name}

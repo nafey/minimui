@@ -2,6 +2,7 @@ import "./../App.css";
 import DashPage from "./dash/DashPage";
 import HomePage from "./home/HomePage";
 import GraphPage from "./graph/GraphPage";
+import AddGraphPage from "./graph/AddGraphPage";
 import { BrowserRouter, Routes, Route, Link } from "react-router";
 
 function App() {
@@ -13,6 +14,10 @@ function App() {
         <Route
           path="/dashboard/:dashboardId/graph/:graphId/"
           element={<GraphPage />}
+        />
+        <Route
+          path="/dashboard/:dashboardId/addgraph/"
+          element={<AddGraphPage />}
         />
         <Route
           path="*"
