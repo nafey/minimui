@@ -9,6 +9,19 @@ import Select from "../ui/Select";
 const GraphPage = () => {
   const { dashboardId, graphId } = useParams();
   const [graph, setGraph] = useState({ name: "", event: "", period: "" });
+  const [graphEdit, setGraphEdit] = useState({
+    name: "",
+    event: "",
+    period: "",
+  });
+
+  // Cancel will set to this value
+  const [graphCancel, setGraphCancel] = useState({
+    name: "",
+    event: "",
+    period: "",
+  });
+
   const [eventList, setEventList] = useState([]);
 
   let navigate = useNavigate();
@@ -19,6 +32,8 @@ const GraphPage = () => {
       const result = await response.json();
       const data = result.data;
       setGraph(data);
+      setGraphEdit(data);
+      setGraphCancel(data);
     })();
 
     (async () => {
@@ -29,10 +44,11 @@ const GraphPage = () => {
       let values = data.map((item) => [item.event, item.event]);
       setEventList(values);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dashboardId, graphId]);
 
   const handleNameChange = (e) => {
-    setGraph({
+    setGraphEdit({
       ...graph,
       name: e.target.value,
     });
@@ -53,13 +69,37 @@ const GraphPage = () => {
   };
 
   const saveChanges = () => {
+    let consolidateGraph = {
+      name: graphEdit.name,
+      event: graph.event,
+      period: graph.period,
+    };
+
+    setGraph(consolidateGraph);
+    setGraphEdit(consolidateGraph);
+    setGraphCancel(consolidateGraph);
+
     fetch("/api/graphs/" + graphId, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(graph),
+      body: JSON.stringify(consolidateGraph),
     });
+  };
+
+  const cancel = () => {
+    console.log(graphCancel);
+    setGraph(graphCancel);
+    setGraphEdit(graphCancel);
+  };
+
+  const hasChanged = () => {
+    return (
+      graph.name != graphEdit.name ||
+      graph.event != graphEdit.event ||
+      graph.period != graphEdit.period
+    );
   };
 
   return (
@@ -73,14 +113,14 @@ const GraphPage = () => {
           }}
         />
       </div>
-      <div className="flex flex-row justify-between">
-        <div className="text-lg select-none">Edit Dashboard</div>
-      </div>
       <div className="flex flex-row gap-4">
         <div className="flex flex-col gap-4 w-80">
+          <div className="flex flex-row justify-between">
+            <div className="text-lg select-none">Graph Properties</div>
+          </div>
           <Input
             title={"Name"}
-            value={graph.name}
+            value={graphEdit.name}
             onChange={handleNameChange}
           />
           <Select
@@ -99,10 +139,14 @@ const GraphPage = () => {
             ]}
             onChange={handlePeriodChange}
           />
-          <div className="flex flex-row justify-end gap-4">
-            <Button text="Cancel" outline={false} />
-            <Button text="Save" outline={true} onClick={saveChanges} />
-          </div>
+          {hasChanged() ? (
+            <div className="flex flex-row justify-end gap-4">
+              <Button text="Cancel" outline={false} onClick={cancel} />
+              <Button text="Save" outline={true} onClick={saveChanges} />
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
         <GraphContainer graph={graph} />
       </div>
