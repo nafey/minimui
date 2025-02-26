@@ -40,12 +40,12 @@ const DashPage = () => {
     <div className="flex h-screen max-w-screen">
       <Sidebar />
 
-      <div className="flex-1 p-8 flex flex-col justify-start gap-16">
+      <div className="flex-1 p-8 flex flex-col justify-between gap-16">
         <div>
           <div className="mb-8 ">{details.name}</div>
           <div className="flex flex-col gap-8">
-            {graphs.map((item, i) => {
-              return <GraphContainer key={i} item={item} />;
+            {graphs.map((graph, i) => {
+              return <GraphContainer key={i} graph={graph} />;
             })}
           </div>
           <div></div>

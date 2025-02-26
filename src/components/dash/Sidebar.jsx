@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
 
 const Sidebar = () => {
-  let { dashId } = useParams();
+  let { dashboardId } = useParams();
   const [show, setShow] = useState(true);
   const [dashlist, setDashlist] = useState([]);
 
@@ -44,7 +44,7 @@ const Sidebar = () => {
             return (
               <DashboardItem
                 item={item}
-                isSelected={item.id == dashId}
+                isSelected={item.id == dashboardId}
                 key={i}
               />
             );

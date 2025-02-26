@@ -1,4 +1,4 @@
-const Select = ({ title, value, values }) => {
+const Select = ({ title, value, values, onChange }) => {
   return (
     <div className="flex flex-row items-center text-sm full-w justify-between">
       <div className="w-24">{title}</div>
@@ -7,6 +7,7 @@ const Select = ({ title, value, values }) => {
         name="cars"
         id="cars"
         value={value}
+        onChange={onChange}
       >
         {values?.map((item, i) => (
           <option key={i} value={item[0]}>

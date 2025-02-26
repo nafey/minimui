@@ -8,7 +8,7 @@ import Select from "../ui/Select";
 
 const GraphPage = () => {
   const { dashboardId, graphId } = useParams();
-  const [graphData, setGraphData] = useState(null);
+  const [graph, setGraph] = useState({ name: "", event: "", period: "" });
   const [eventList, setEventList] = useState([]);
 
   let navigate = useNavigate();
@@ -18,7 +18,7 @@ const GraphPage = () => {
       const response = await fetch("/api/graphs/" + graphId);
       const result = await response.json();
       const data = result.data;
-      setGraphData(data);
+      setGraph(data);
     })();
 
     (async () => {
@@ -29,22 +29,38 @@ const GraphPage = () => {
       let values = data.map((item) => [item.event, item.event]);
       setEventList(values);
     })();
-  }, [graphId]);
+  }, [dashboardId, graphId]);
 
-  let graphName = "";
-  if (graphData?.name) {
-    graphName = graphData.name;
-  }
+  const handleNameChange = (e) => {
+    setGraph({
+      ...graph,
+      name: e.target.value,
+    });
+  };
 
-  let graphEvent = "";
-  if (graphData?.event) {
-    graphEvent = graphData.event;
-  }
+  const handleEventChange = (e) => {
+    setGraph({
+      ...graph,
+      event: e.target.value,
+    });
+  };
 
-  let graphPeriod = "";
-  if (graphData?.period) {
-    graphPeriod = graphData.period;
-  }
+  const handlePeriodChange = (e) => {
+    setGraph({
+      ...graph,
+      period: e.target.value,
+    });
+  };
+
+  const saveChanges = () => {
+    fetch("/api/graphs/" + graphId, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(graph),
+    });
+  };
 
   return (
     <div className="flex flex-col gap-4 py-12 px-16">
@@ -59,27 +75,36 @@ const GraphPage = () => {
       </div>
       <div className="flex flex-row justify-between">
         <div className="text-lg select-none">Edit Dashboard</div>
-        {/* <div>Save</div> */}
       </div>
       <div className="flex flex-row gap-4">
         <div className="flex flex-col gap-4 w-80">
-          <Input title={"Name"} value={graphName} />
-          <Select title={"Event"} value={graphEvent} values={eventList} />
+          <Input
+            title={"Name"}
+            value={graph.name}
+            onChange={handleNameChange}
+          />
+          <Select
+            title={"Event"}
+            value={graph.event}
+            values={eventList}
+            onChange={handleEventChange}
+          />
           <Select
             title={"Period"}
-            value={graphPeriod}
+            value={graph.period}
             values={[
               ["DAILY", "Day"],
               ["HOURLY", "Hour"],
               ["MINUTELY", "Minute"],
             ]}
+            onChange={handlePeriodChange}
           />
           <div className="flex flex-row justify-end gap-4">
             <Button text="Cancel" outline={false} />
-            <Button text="Save" outline={true} />
+            <Button text="Save" outline={true} onClick={saveChanges} />
           </div>
         </div>
-        <GraphContainer item={graphData} />
+        <GraphContainer graph={graph} />
       </div>
     </div>
   );

@@ -2,26 +2,30 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router";
 import MyLineChart from "./MyLineChart";
 
-const GraphContainer = ({ item }) => {
+const GraphContainer = ({ graph }) => {
   const [labels, setLabels] = useState([]);
   const [count, setCount] = useState([]);
 
   const { dashboardId } = useParams();
-  const { id } = { ...item };
+  const { id } = { ...graph };
 
   useEffect(() => {
     (async () => {
-      if (!item) return;
+      if (!graph) return;
 
-      let event = item.event;
-      let period = item.period;
+      let event = graph.event;
+      let period = graph.period;
 
-      let path = "/api/stat/minutes/";
+      let path = "";
 
       if (period === "DAILY") {
         path = "/api/stat/daily/";
       } else if (period === "HOURLY") {
         path = "/api/stat/hourly/";
+      } else if (period == "MINUTELY") {
+        path = "/api/stat/minutes/";
+      } else {
+        return;
       }
 
       const response = await fetch(path, {
@@ -52,9 +56,9 @@ const GraphContainer = ({ item }) => {
 
       setLabels(labels);
     })();
-  }, [item]);
+  }, [graph]);
 
-  if (!item) {
+  if (!graph) {
     return <div>Loading</div>;
   }
 
@@ -64,7 +68,7 @@ const GraphContainer = ({ item }) => {
     <div className="flex flex-col gap-4 w-full h-72 border border-neutral-700 rounded-xl">
       <Link to={link}>
         <div className="border-b p-4 border-neutral-700 rounded-t-xl hover:bg-neutral-800 cursor-pointer select-none">
-          {item.name}
+          {graph.name}
         </div>
       </Link>
       <MyLineChart count={count} labels={labels} />

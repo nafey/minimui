@@ -1,4 +1,4 @@
-const Button = ({ text, outline }) => {
+const Button = ({ text, outline, onClick }) => {
   let style =
     "flex items-center text-sm select-none hover:bg-neutral-800 rounded-lg cursor-pointer px-4 py-1.5 border-neutral-700 ";
 
@@ -6,7 +6,11 @@ const Button = ({ text, outline }) => {
     style += "border";
   }
 
-  return <div className={style}>{text}</div>;
+  return (
+    <div onClick={onClick} className={style}>
+      {text}
+    </div>
+  );
 };
 
 export default Button;
