@@ -5,7 +5,6 @@ import { useNavigate } from "react-router";
 import { useEffect } from "react";
 import GraphContainer from "./GraphContainer";
 import GraphProperties from "./GraphProperties";
-import Input2 from "../ui/Input2";
 
 const AddGraphPage = () => {
   const { dashboardId } = useParams();
@@ -19,21 +18,17 @@ const AddGraphPage = () => {
 
   let navigate = useNavigate();
 
-  const onValueChange = (graphChanged) => {
-    if (!graphChanged) return;
+  const onSave = async () => {
+    await fetch("/api/graphs/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...graph, dashboardId: parseInt(dashboardId) }),
+    });
 
-    if (graphChanged.event != graph.event) {
-      setGraph({ ...graph, event: graphChanged.event });
-    }
-
-    if (graphChanged.period != graph.period) {
-      setGraph({ ...graph, period: graphChanged.period });
-    }
+    navigate("/dashboard/" + dashboardId);
   };
-
-  const onSave = () => {};
-
-  const onCancel = () => {};
 
   return (
     <div className="flex flex-col gap-4 py-12 px-16">
@@ -46,14 +41,12 @@ const AddGraphPage = () => {
           }}
         />
       </div>
-      <Input2 title="Hello" value={"Hello"} />
       <div className="flex flex-row gap-4">
         <GraphProperties
           graph={graph}
           setGraph={setGraph}
-          onValueChange={onValueChange}
           onSave={onSave}
-          onCancel={onCancel}
+          actionText="Save"
         />
         <GraphContainer graph={graph} />
       </div>
