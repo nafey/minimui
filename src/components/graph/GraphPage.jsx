@@ -19,32 +19,16 @@ const GraphPage = () => {
     })();
   }, [dashboardId, graphId]);
 
-  const onSave = (consolidateGraph) => {
-    setGraph(consolidateGraph);
-
-    fetch("/api/graphs/" + graphId, {
+  const onSave = async () => {
+    await fetch("/api/graphs/" + graphId, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(consolidateGraph),
+      body: JSON.stringify(graph),
     });
-  };
 
-  const onCancel = (g) => {
-    setGraph(g);
-  };
-
-  const onValueChange = (graphChanged) => {
-    if (!graphChanged) return;
-
-    if (graphChanged.event != graph.event) {
-      setGraph({ ...graph, event: graphChanged.event });
-    }
-
-    if (graphChanged.period != graph.period) {
-      setGraph({ ...graph, period: graphChanged.period });
-    }
+    navigate("/dashboard/" + dashboardId);
   };
 
   return (
@@ -59,14 +43,12 @@ const GraphPage = () => {
         />
       </div>
       <div className="flex flex-row gap-4">
-        <div className="flex flex-col gap-4 w-80">
-          <GraphProperties
-            initGraph={graph}
-            onValueChange={onValueChange}
-            onSave={onSave}
-            onCancel={onCancel}
-          />
-        </div>
+        <GraphProperties
+          graph={graph}
+          setGraph={setGraph}
+          onSave={onSave}
+          actionText="Done"
+        />
         <GraphContainer graph={graph} />
       </div>
     </div>

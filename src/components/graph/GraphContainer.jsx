@@ -12,6 +12,7 @@ const GraphContainer = ({ graph }) => {
   useEffect(() => {
     (async () => {
       if (!graph) return;
+      if (!graph.event || !graph.period) return;
 
       let event = graph.event;
       let period = graph.period;

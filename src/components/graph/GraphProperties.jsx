@@ -1,13 +1,10 @@
 import { useState, useEffect } from "react";
-import Input from "../ui/Input";
+import Input2 from "../ui/Input2";
 import Select from "../ui/Select";
 import Button from "../ui/Button";
 
-const GraphProperties = ({ initGraph, onValueChange, onSave, onCancel }) => {
+const GraphProperties = ({ graph, setGraph, onSave, actionText }) => {
   const [eventList, setEventList] = useState([]);
-
-  const [graph, setGraph] = useState({ ...initGraph });
-  const [savedGraph, setSavedGraph] = useState({ ...initGraph });
 
   useEffect(() => {
     (async () => {
@@ -17,21 +14,24 @@ const GraphProperties = ({ initGraph, onValueChange, onSave, onCancel }) => {
 
       let values = data.map((item) => [item.event, item.event]);
       setEventList(values);
+
+      if (graph.event == "") {
+        if (!data || !data[0] || !data[0].event) return;
+        let e = data[0].event;
+
+        setGraph({
+          ...graph,
+          event: e,
+        });
+      }
     })();
   }, []);
 
-  useEffect(() => {
-    setGraph({ ...initGraph });
-    setSavedGraph({ ...initGraph });
-  }, [initGraph]);
-
-  const handleNameChange = (e) => {
+  const handleNameChange = (text) => {
     setGraph({
       ...graph,
-      name: e.target.value,
+      name: text,
     });
-
-    onValueChange({ ...graph });
   };
 
   const handleEventChange = (e) => {
@@ -39,8 +39,6 @@ const GraphProperties = ({ initGraph, onValueChange, onSave, onCancel }) => {
       ...graph,
       event: e.target.value,
     });
-
-    onValueChange({ ...graph });
   };
 
   const handlePeriodChange = (e) => {
@@ -48,32 +46,16 @@ const GraphProperties = ({ initGraph, onValueChange, onSave, onCancel }) => {
       ...graph,
       period: e.target.value,
     });
-
-    onValueChange({ ...graph });
-  };
-
-  const handleCancel = () => {
-    setGraph(savedGraph);
-    onCancel(savedGraph);
   };
 
   const handleSave = () => {
-    onSave(graph);
-    setSavedGraph(graph);
-  };
-
-  const hasChanged = () => {
-    return (
-      graph.name != savedGraph.name ||
-      graph.event != savedGraph.event ||
-      graph.period != savedGraph.period
-    );
+    onSave();
   };
 
   return (
     <div className="flex flex-col gap-4 w-80">
       <div className="text-lg select-none">Graph Properties</div>
-      <Input title={"Name"} value={graph.name} onChange={handleNameChange} />
+      <Input2 title={"Name"} value={graph.name} onChange={handleNameChange} />
       <Select
         title={"Event"}
         value={graph.event}
@@ -90,14 +72,13 @@ const GraphProperties = ({ initGraph, onValueChange, onSave, onCancel }) => {
         ]}
         onChange={handlePeriodChange}
       />
-      {hasChanged() ? (
-        <div className="flex flex-row justify-end gap-4">
-          <Button text="Cancel" outline={false} onClick={handleCancel} />
-          <Button text="Save" outline={true} onClick={handleSave} />
-        </div>
-      ) : (
-        <></>
-      )}
+      <div className="flex flex-row justify-end gap-4">
+        <Button
+          text={actionText ? actionText : "Save"}
+          outline={true}
+          onClick={handleSave}
+        />
+      </div>
     </div>
   );
 };
