@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
 const MenuButton = () => {
-  let [isVisible, setVisible] = useState(false);
-
+  const [isVisible, setVisible] = useState(false);
   const ref = useRef(null);
 
   const handleClickOutside = (event) => {
