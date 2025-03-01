@@ -25,7 +25,7 @@ const GraphProperties = ({ graph, setGraph, onSave, actionText }) => {
         });
       }
     })();
-  }, []);
+  }, [graph, setGraph]);
 
   const handleNameChange = (text) => {
     setGraph({

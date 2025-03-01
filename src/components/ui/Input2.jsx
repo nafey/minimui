@@ -14,7 +14,7 @@ const Input2 = ({ title, placeholder, value, onChange }) => {
     }, 800);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [text]);
+  }, [text, onChange]);
 
   return (
     <div className="flex flex-row items-center  text-sm full-w justify-between">

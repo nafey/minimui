@@ -1,9 +1,11 @@
 import "./../App.css";
+
 import DashPage from "./dash/DashPage";
 import HomePage from "./home/HomePage";
 import GraphPage from "./graph/GraphPage";
 import AddGraphPage from "./graph/AddGraphPage";
-import { BrowserRouter, Routes, Route, Link } from "react-router";
+import NotFound from "./NotFound";
+import { BrowserRouter, Routes, Route } from "react-router";
 
 function App() {
   return (
@@ -19,18 +21,7 @@ function App() {
           path="/dashboard/:dashboardId/addgraph/"
           element={<AddGraphPage />}
         />
-        <Route
-          path="*"
-          element={
-            <div className="p-32 text-xl">
-              404: Not Found.
-              <br /> Click here to go to{" "}
-              <Link to="/">
-                <a className="text-blue-800 underline">home</a>.
-              </Link>{" "}
-            </div>
-          }
-        />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
