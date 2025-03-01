@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router";
 import MyLineChart from "./MyLineChart";
+import MenuButton from "../ui/MenuButton";
+import MenuItem from "../ui/MenuItem";
 
 const GraphContainer = ({ graph }) => {
   const [labels, setLabels] = useState([]);
@@ -68,8 +70,13 @@ const GraphContainer = ({ graph }) => {
   return (
     <div className="flex flex-col gap-4 w-full h-72 border border-neutral-700 rounded-xl">
       <Link to={link}>
-        <div className="border-b p-4 border-neutral-700 rounded-t-xl hover:bg-neutral-800 cursor-pointer select-none">
-          {graph.name}
+        <div className="flex flex-row justify-between border-b p-4 border-neutral-700 rounded-t-xl hover:bg-neutral-800 cursor-pointer select-none">
+          <div>{graph.name}</div>
+          <MenuButton>
+            <MenuItem text="Link 1" />
+            <MenuItem text="Link 2" />
+            <MenuItem text="Link 3" />
+          </MenuButton>
         </div>
       </Link>
       <MyLineChart count={count} labels={labels} />

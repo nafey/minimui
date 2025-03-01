@@ -1,18 +1,19 @@
 import { useState, useEffect, useRef } from "react";
+import { EllipsisVertical } from "lucide-react";
 
-const MenuButton = () => {
+const MenuButton = ({ children }) => {
   const [isVisible, setVisible] = useState(false);
   const ref = useRef(null);
 
-  const handleClickOutside = (event) => {
-    if (ref.current && !ref.current.contains(event.target)) {
-      if (isVisible) {
-        setVisible(false);
-      }
-    }
-  };
-
   useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        if (isVisible) {
+          setVisible(false);
+        }
+      }
+    };
+
     document.addEventListener("click", handleClickOutside, true);
     return () => {
       document.removeEventListener("click", handleClickOutside, true);
@@ -22,29 +23,25 @@ const MenuButton = () => {
   return (
     <div className="dropdown relative inline-block float-right">
       <button
-        className="dropbtn bg-red-800"
-        onClick={() => {
+        className={
+          "dropbtn hover:bg-neutral-700 rounded-lg cursor-pointer p-1.5 " +
+          (isVisible ? " bg-neutral-700 " : "")
+        }
+        onClick={(event) => {
           setVisible(!isVisible);
+          event.preventDefault();
         }}
       >
-        Menu
+        <EllipsisVertical size={18} />
       </button>
       <div
         ref={ref}
         className={
-          "dropdown-content absolute z-1 right-0 min-w-32 bg-black " +
+          "dropdown-content absolute z-10 right-0 min-w-32 bg-neutral-700 rounded-lg mt-1 " +
           (isVisible ? "" : "invisible")
         }
       >
-        <a className="block p-2" href="#">
-          Link 1
-        </a>
-        <a className="block p-2" href="#">
-          Link 2
-        </a>
-        <a className="block p-2" href="#">
-          Link 3
-        </a>
+        <div className="flex flex-col">{children}</div>
       </div>
     </div>
   );

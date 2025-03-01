@@ -1,5 +1,4 @@
 import { Link } from "react-router";
-import MenuButton from "./ui/MenuButton";
 
 const NotFound = () => {
   return (
