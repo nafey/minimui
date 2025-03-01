@@ -20,6 +20,10 @@ const MenuButton = ({ children }) => {
     };
   }, [isVisible]);
 
+  const style = {
+    "background-color": "#1a1a1a",
+  };
+
   return (
     <div className="dropdown relative inline-block float-right">
       <button
@@ -37,11 +41,12 @@ const MenuButton = ({ children }) => {
       <div
         ref={ref}
         className={
-          "dropdown-content absolute z-10 right-0 min-w-32 bg-neutral-700 rounded-lg mt-1 " +
+          "dropdown-content absolute z-10 right-0 min-w-40 bg-neutral-700 rounded-lg mt-1 border border-neutral-700  " +
           (isVisible ? "" : "invisible")
         }
+        style={style}
       >
-        <div className="flex flex-col">{children}</div>
+        <div className="flex flex-col rounded-lg">{children}</div>
       </div>
     </div>
   );

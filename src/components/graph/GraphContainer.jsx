@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router";
 import MyLineChart from "./MyLineChart";
 import MenuButton from "../ui/MenuButton";
 import MenuItem from "../ui/MenuItem";
+import { Pen, RotateCw, Trash2 } from "lucide-react";
 
 const GraphContainer = ({ graph }) => {
   const [labels, setLabels] = useState([]);
@@ -73,9 +74,9 @@ const GraphContainer = ({ graph }) => {
         <div className="flex flex-row justify-between border-b p-4 border-neutral-700 rounded-t-xl hover:bg-neutral-800 cursor-pointer select-none">
           <div>{graph.name}</div>
           <MenuButton>
-            <MenuItem text="Link 1" />
-            <MenuItem text="Link 2" />
-            <MenuItem text="Link 3" />
+            <MenuItem Icon={Pen} text="Edit" />
+            <MenuItem Icon={RotateCw} text="Refresh" />
+            <MenuItem Icon={Trash2} text="Delete" />
           </MenuButton>
         </div>
       </Link>
