@@ -6,7 +6,7 @@ import Button from "../ui/Button";
 // import MenuButton from "../ui/MenuButton"
 import EditableLabel from "../ui/EditableLabel";
 import { Link, useParams } from "react-router";
-import Input from "../ui/Input";
+// import Input from "../ui/Input";
 
 const getDashboard = async (dashboardId) => {
   const response = await fetch("/api/dashboards/" + dashboardId, {});
@@ -41,7 +41,7 @@ const DashPage = () => {
         <div className="flex flex-row justify-between">
           {/* <div>{details.name}</div> */}
           {/* <EditableLabel text={details.name} /> */}
-          <Input text={details.name} />
+          <EditableLabel text={details.name} />
         </div>
         {graphs.map((graph, i) => {
           return <GraphContainer key={i} graph={graph} />;
