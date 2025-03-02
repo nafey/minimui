@@ -38,7 +38,6 @@ const DashPage = () => {
       <div className="flex-1 p-8 flex flex-col gap-8 overflow-scroll">
         <div className="flex flex-row justify-between">
           <div>{details.name}</div>
-          <MenuButton />
         </div>
         {graphs.map((graph, i) => {
           return <GraphContainer key={i} graph={graph} />;

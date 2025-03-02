@@ -1,13 +1,14 @@
-// import { useContext } from "react";
 import { ChartColumn } from "lucide-react";
 import { Link } from "react-router";
-// import { MyContext } from "./MyContext";
-//
+import MenuButton from "../ui/MenuButton";
+import MenuItem from "../ui/MenuItem";
+import { Pen, RotateCw, Trash2, Link as LinkIcon } from "lucide-react";
+
 const DashboardItem = ({ item, isSelected }) => {
   // const { setDashId } = useContext(MyContext);
 
   let className =
-    "py-2 flex flex-row gap-4 cursor-pointer rounded-lg p-4 select-none";
+    "py-2 flex flex-row gap-4 cursor-pointer rounded-lg p-2 px-4 select-none";
   if (isSelected) {
     className += " bg-[#2D2D2D] ";
   } else {
@@ -18,8 +19,22 @@ const DashboardItem = ({ item, isSelected }) => {
   return (
     <Link to={path}>
       <li className={className} onClick={() => {}}>
-        <ChartColumn color="#919191" size={18} />
-        <div className="text-sm text-neutral-100">{item.name}</div>
+        <div className="flex justify-between items-center w-full">
+          <div className="flex flex-row gap-4 items-center">
+            <ChartColumn color="#919191" size={18} />
+            <div className="text-sm text-neutral-100 my-1 ">{item.name}</div>
+          </div>
+          {isSelected && (
+            <div className="flex">
+              <MenuButton>
+                <MenuItem Icon={Pen} text="Rename" />
+                <MenuItem Icon={RotateCw} text="Refresh" />
+                <MenuItem Icon={LinkIcon} text="Copy Link" />
+                <MenuItem Icon={Trash2} text="Delete" />
+              </MenuButton>
+            </div>
+          )}
+        </div>
       </li>
     </Link>
   );
