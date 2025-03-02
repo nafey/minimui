@@ -2,7 +2,14 @@ import { ChartColumn } from "lucide-react";
 import { Link } from "react-router";
 import MenuButton from "../ui/MenuButton";
 import MenuItem from "../ui/MenuItem";
-import { Pen, RotateCw, Trash2, Link as LinkIcon } from "lucide-react";
+import {
+  Pen,
+  RotateCw,
+  Trash2,
+  Link as LinkIcon,
+  CaseLower,
+  CaseSensitive,
+} from "lucide-react";
 
 const DashboardItem = ({ item, isSelected }) => {
   // const { setDashId } = useContext(MyContext);
@@ -27,8 +34,8 @@ const DashboardItem = ({ item, isSelected }) => {
           {isSelected && (
             <div className="flex">
               <MenuButton>
-                <MenuItem Icon={Pen} text="Rename" />
-                <MenuItem Icon={RotateCw} text="Refresh" />
+                <MenuItem Icon={CaseSensitive} text="Rename" />
+                {/* <MenuItem Icon={RotateCw} text="Refresh" /> */}
                 <MenuItem Icon={LinkIcon} text="Copy Link" />
                 <MenuItem Icon={Trash2} text="Delete" />
               </MenuButton>

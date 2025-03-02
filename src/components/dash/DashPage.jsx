@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import GraphContainer from "../graph/GraphContainer";
 import Sidebar from "./Sidebar";
 import Button from "../ui/Button";
-import MenuButton from "../ui/MenuButton";
+// import MenuButton from "../ui/MenuButton"
+import EditableLabel from "../ui/EditableLabel";
 import { Link, useParams } from "react-router";
+import Input from "../ui/Input";
 
 const getDashboard = async (dashboardId) => {
   const response = await fetch("/api/dashboards/" + dashboardId, {});
@@ -37,7 +39,9 @@ const DashPage = () => {
 
       <div className="flex-1 p-8 flex flex-col gap-8 overflow-scroll">
         <div className="flex flex-row justify-between">
-          <div>{details.name}</div>
+          {/* <div>{details.name}</div> */}
+          {/* <EditableLabel text={details.name} /> */}
+          <Input text={details.name} />
         </div>
         {graphs.map((graph, i) => {
           return <GraphContainer key={i} graph={graph} />;

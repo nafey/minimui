@@ -21,11 +21,11 @@ const MenuButton = ({ children }) => {
   }, [isVisible]);
 
   const style = {
-    "background-color": "#1a1a1a",
+    backgroundColor: "#1a1a1a",
   };
 
   return (
-    <div className="dropdown relative inline-block float-right">
+    <div className="dropdown relative inline-block float-right text-sm">
       <button
         className={
           "dropbtn hover:bg-neutral-700 rounded-lg cursor-pointer p-1.5 " +

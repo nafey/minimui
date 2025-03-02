@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Input2 from "../ui/Input2";
+import LabeledInput from "../ui/LabeledInput";
 import Select from "../ui/Select";
 import Button from "../ui/Button";
 
@@ -55,7 +55,11 @@ const GraphProperties = ({ graph, setGraph, onSave, actionText }) => {
   return (
     <div className="flex flex-col gap-4 w-80">
       <div className="text-lg select-none">Graph Properties</div>
-      <Input2 title={"Name"} value={graph.name} onChange={handleNameChange} />
+      <LabeledInput
+        title={"Name"}
+        value={graph.name}
+        onChange={handleNameChange}
+      />
       <Select
         title={"Event"}
         value={graph.event}
