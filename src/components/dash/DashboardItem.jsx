@@ -5,7 +5,7 @@ import MenuItem from "../ui/MenuItem";
 import { Trash2, Link as LinkIcon, CaseSensitive } from "lucide-react";
 import { useToast } from "../ui/ToastContext";
 
-const DashboardItem = ({ item, isSelected, renameAction }) => {
+const DashboardItem = ({ item, isSelected, renameAction, deleteAction }) => {
   // const { setDashId } = useContext(MyContext);
   const { showToast } = useToast();
 
@@ -43,7 +43,20 @@ const DashboardItem = ({ item, isSelected, renameAction }) => {
                     showToast("Link Copied", "success");
                   }}
                 />
-                <MenuItem Icon={Trash2} text="Delete" />
+                <MenuItem
+                  Icon={Trash2}
+                  text="Delete"
+                  action={() => {
+                    let out = confirm(
+                      "Dashboard and all the accompanying graphs will be deleted. Please confirm.",
+                    );
+
+                    if (out) {
+                      // alert("Deleted");
+                      deleteAction();
+                    }
+                  }}
+                />
               </MenuButton>
             </div>
           )}

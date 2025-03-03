@@ -3,7 +3,7 @@ import DashboardItem from "./DashboardItem";
 import { useState } from "react";
 import { useParams, Link } from "react-router";
 
-const Sidebar = ({ dashlist, renameAction }) => {
+const Sidebar = ({ dashlist, renameAction, deleteAction }) => {
   let { dashboardId } = useParams();
   const [show, setShow] = useState(true);
 
@@ -28,6 +28,7 @@ const Sidebar = ({ dashlist, renameAction }) => {
                 isSelected={item.id == dashboardId}
                 key={i}
                 renameAction={renameAction}
+                deleteAction={deleteAction}
               />
             );
           })}

@@ -4,9 +4,11 @@ import GraphContainer from "../graph/GraphContainer";
 import Sidebar from "./Sidebar";
 import Button from "../ui/Button";
 import EditableLabel from "../ui/EditableLabel";
-import { Link, useParams } from "react-router";
+import { Link, useParams, useNavigate } from "react-router";
 
 const DashPage = () => {
+  let navigate = useNavigate();
+
   let { dashboardId } = useParams();
 
   const [details, setDetails] = useState({});
@@ -59,6 +61,16 @@ const DashPage = () => {
     setEditingDashname(true);
   };
 
+  const deleteDashboard = async () => {
+    await fetch("/api/dashboards/" + dashboardId, {
+      method: "DELETE",
+    });
+
+    let dashboards = await getDashboards();
+    let dashId = dashboards[0].id;
+    navigate("/dashboard/" + dashId);
+  };
+
   useEffect(() => {
     (async () => {
       if (dashboardId) {
@@ -78,7 +90,11 @@ const DashPage = () => {
 
   return (
     <div className="flex h-screen max-w-screen">
-      <Sidebar dashlist={dashlist} renameAction={renameAction} />
+      <Sidebar
+        dashlist={dashlist}
+        renameAction={renameAction}
+        deleteAction={deleteDashboard}
+      />
 
       <div className="flex-1 p-8 flex flex-col gap-8 overflow-scroll">
         <div className="flex flex-row justify-between">
