@@ -1,9 +1,10 @@
+import Button from "../ui/Button";
 import BackButton from "./../ui/BackButton";
 import DashboardItem from "./DashboardItem";
 import { useState } from "react";
 import { useParams, Link } from "react-router";
 
-const Sidebar = ({ dashlist, renameAction, deleteAction }) => {
+const Sidebar = ({ dashlist, renameAction, deleteAction, createAction }) => {
   let { dashboardId } = useParams();
   const [show, setShow] = useState(true);
 
@@ -32,6 +33,7 @@ const Sidebar = ({ dashlist, renameAction, deleteAction }) => {
               />
             );
           })}
+        <Button text={"+ Add Dashboard"} onClick={createAction} />
       </ul>
     </div>
   );

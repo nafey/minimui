@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useToast } from "../ui/ToastContext";
 
 import GraphContainer from "../graph/GraphContainer";
 import Sidebar from "./Sidebar";
@@ -10,6 +11,7 @@ const DashPage = () => {
   let navigate = useNavigate();
 
   let { dashboardId } = useParams();
+  const { showToast } = useToast();
 
   const [details, setDetails] = useState({});
   const [graphs, setGraphs] = useState([]);
@@ -69,6 +71,26 @@ const DashPage = () => {
     let dashboards = await getDashboards();
     let dashId = dashboards[0].id;
     navigate("/dashboard/" + dashId);
+    showToast("Deleted dashboard", "success");
+  };
+
+  const createDashboard = async () => {
+    let response = await fetch("/api/dashboards/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: "New Dashboard",
+      }),
+    });
+
+    const out = await response.json();
+    if (out && out.data && out.data.id) {
+      let dashId = out.data.id;
+      navigate("/dashboard/" + dashId);
+      showToast("Created New dashboard", "success");
+    }
   };
 
   useEffect(() => {
@@ -94,6 +116,7 @@ const DashPage = () => {
         dashlist={dashlist}
         renameAction={renameAction}
         deleteAction={deleteDashboard}
+        createAction={createDashboard}
       />
 
       <div className="flex-1 p-8 flex flex-col gap-8 overflow-scroll">
