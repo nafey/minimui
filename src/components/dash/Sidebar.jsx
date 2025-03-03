@@ -3,32 +3,13 @@ import DashboardItem from "./DashboardItem";
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
 
-const Sidebar = () => {
+const Sidebar = ({ dashlist }) => {
   let { dashboardId } = useParams();
   const [show, setShow] = useState(true);
-  const [dashlist, setDashlist] = useState([]);
 
   const onClick = () => {
     setShow(!show);
   };
-
-  const getDashboards = async () => {
-    const response = await fetch("/api/dashboards/", {});
-    const result = await response.json();
-
-    if (!(result && result.data)) {
-      return [];
-    }
-
-    return result.data;
-  };
-
-  useEffect(() => {
-    (async () => {
-      let data = await getDashboards();
-      setDashlist(data);
-    })();
-  }, []);
 
   const open = (
     <div className="w-64 h-full text-left text-white p-4 border-r border-neutral-700 border-1 ">

@@ -8,18 +8,55 @@ import EditableLabel from "../ui/EditableLabel";
 import { Link, useParams } from "react-router";
 // import Input from "../ui/Input";
 
-const getDashboard = async (dashboardId) => {
-  const response = await fetch("/api/dashboards/" + dashboardId, {});
-  const result = await response.json();
-  const data = result.data;
-  return data;
-};
-
 const DashPage = () => {
   let { dashboardId } = useParams();
 
   const [details, setDetails] = useState({});
   const [graphs, setGraphs] = useState([]);
+  const [dashlist, setDashlist] = useState([]);
+
+  const getDashboard = async (dashboardId) => {
+    const response = await fetch("/api/dashboards/" + dashboardId, {});
+    const result = await response.json();
+    const data = result.data;
+    return data;
+  };
+
+  const getDashboards = async () => {
+    const response = await fetch("/api/dashboards/", {});
+    const result = await response.json();
+
+    if (!(result && result.data)) {
+      return [];
+    }
+
+    return result.data;
+  };
+
+  const updateDashName = async (name) => {
+    setDetails({ ...details, name: name });
+
+    let out = await fetch("/api/dashboards/" + dashboardId, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+      }),
+    });
+
+    console.log(out);
+
+    let dashData = await getDashboard(dashboardId);
+    let dashGraphs = dashData?.graphs ? dashData.graphs : [];
+
+    setDetails(dashData);
+    setGraphs(dashGraphs);
+
+    let data = await getDashboards();
+    setDashlist(data);
+  };
 
   useEffect(() => {
     (async () => {
@@ -31,17 +68,23 @@ const DashPage = () => {
         setGraphs(dashGraphs);
       }
     })();
+
+    (async () => {
+      let data = await getDashboards();
+      setDashlist(data);
+    })();
   }, [dashboardId]);
 
   return (
     <div className="flex h-screen max-w-screen">
-      <Sidebar />
+      <Sidebar dashlist={dashlist} />
 
       <div className="flex-1 p-8 flex flex-col gap-8 overflow-scroll">
         <div className="flex flex-row justify-between">
-          {/* <div>{details.name}</div> */}
-          {/* <EditableLabel text={details.name} /> */}
-          <EditableLabel text={details.name} />
+          <EditableLabel
+            text={details.name}
+            onChange={(newName) => updateDashName(newName)}
+          />
         </div>
         {graphs.map((graph, i) => {
           return <GraphContainer key={i} graph={graph} />;
