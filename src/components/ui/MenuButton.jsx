@@ -6,7 +6,7 @@ const MenuButton = ({ children }) => {
   const ref = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = () => {
       // if (ref.current && !ref.current.contains(event.target)) {
       if (isVisible) {
         setVisible(false);

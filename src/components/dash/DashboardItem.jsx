@@ -3,9 +3,11 @@ import { Link } from "react-router";
 import MenuButton from "../ui/MenuButton";
 import MenuItem from "../ui/MenuItem";
 import { Trash2, Link as LinkIcon, CaseSensitive } from "lucide-react";
+import { useToast } from "../ui/ToastContext";
 
 const DashboardItem = ({ item, isSelected, renameAction }) => {
   // const { setDashId } = useContext(MyContext);
+  const { showToast } = useToast();
 
   let className =
     "py-2 flex flex-row gap-4 cursor-pointer rounded-lg p-2 px-4 select-none";
@@ -33,7 +35,14 @@ const DashboardItem = ({ item, isSelected, renameAction }) => {
                   action={() => renameAction()}
                 />
                 {/* <MenuItem Icon={RotateCw} text="Refresh" /> */}
-                <MenuItem Icon={LinkIcon} text="Copy Link" />
+                <MenuItem
+                  Icon={LinkIcon}
+                  text="Copy Link"
+                  action={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                    showToast("Link Copied", "success");
+                  }}
+                />
                 <MenuItem Icon={Trash2} text="Delete" />
               </MenuButton>
             </div>
