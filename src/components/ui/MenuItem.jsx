@@ -1,6 +1,7 @@
-const MenuItem = ({ text, Icon }) => {
+const MenuItem = ({ text, Icon, action }) => {
   const onClick = (e) => {
     e.preventDefault();
+    action();
   };
   return (
     <div

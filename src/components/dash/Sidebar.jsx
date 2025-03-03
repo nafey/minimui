@@ -1,9 +1,9 @@
 import BackButton from "./../ui/BackButton";
 import DashboardItem from "./DashboardItem";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams, Link } from "react-router";
 
-const Sidebar = ({ dashlist }) => {
+const Sidebar = ({ dashlist, renameAction }) => {
   let { dashboardId } = useParams();
   const [show, setShow] = useState(true);
 
@@ -27,6 +27,7 @@ const Sidebar = ({ dashlist }) => {
                 item={item}
                 isSelected={item.id == dashboardId}
                 key={i}
+                renameAction={renameAction}
               />
             );
           })}

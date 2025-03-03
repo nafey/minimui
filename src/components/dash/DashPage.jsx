@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-// import { MyContext } from "./MyContext";
+
 import GraphContainer from "../graph/GraphContainer";
 import Sidebar from "./Sidebar";
 import Button from "../ui/Button";
-// import MenuButton from "../ui/MenuButton"
 import EditableLabel from "../ui/EditableLabel";
 import { Link, useParams } from "react-router";
-// import Input from "../ui/Input";
 
 const DashPage = () => {
   let { dashboardId } = useParams();
@@ -14,6 +12,7 @@ const DashPage = () => {
   const [details, setDetails] = useState({});
   const [graphs, setGraphs] = useState([]);
   const [dashlist, setDashlist] = useState([]);
+  const [isEditingDashname, setEditingDashname] = useState(false);
 
   const getDashboard = async (dashboardId) => {
     const response = await fetch("/api/dashboards/" + dashboardId, {});
@@ -36,7 +35,7 @@ const DashPage = () => {
   const updateDashName = async (name) => {
     setDetails({ ...details, name: name });
 
-    let out = await fetch("/api/dashboards/" + dashboardId, {
+    await fetch("/api/dashboards/" + dashboardId, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -46,8 +45,6 @@ const DashPage = () => {
       }),
     });
 
-    console.log(out);
-
     let dashData = await getDashboard(dashboardId);
     let dashGraphs = dashData?.graphs ? dashData.graphs : [];
 
@@ -56,6 +53,10 @@ const DashPage = () => {
 
     let data = await getDashboards();
     setDashlist(data);
+  };
+
+  const renameAction = () => {
+    setEditingDashname(true);
   };
 
   useEffect(() => {
@@ -77,11 +78,13 @@ const DashPage = () => {
 
   return (
     <div className="flex h-screen max-w-screen">
-      <Sidebar dashlist={dashlist} />
+      <Sidebar dashlist={dashlist} renameAction={renameAction} />
 
       <div className="flex-1 p-8 flex flex-col gap-8 overflow-scroll">
         <div className="flex flex-row justify-between">
           <EditableLabel
+            isEditing={isEditingDashname}
+            setEditing={setEditingDashname}
             text={details.name}
             onChange={(newName) => updateDashName(newName)}
           />

@@ -7,11 +7,11 @@ const MenuButton = ({ children }) => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
-        if (isVisible) {
-          setVisible(false);
-        }
+      // if (ref.current && !ref.current.contains(event.target)) {
+      if (isVisible) {
+        setVisible(false);
       }
+      // }
     };
 
     document.addEventListener("click", handleClickOutside, true);

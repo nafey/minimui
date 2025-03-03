@@ -2,16 +2,9 @@ import { ChartColumn } from "lucide-react";
 import { Link } from "react-router";
 import MenuButton from "../ui/MenuButton";
 import MenuItem from "../ui/MenuItem";
-import {
-  Pen,
-  RotateCw,
-  Trash2,
-  Link as LinkIcon,
-  CaseLower,
-  CaseSensitive,
-} from "lucide-react";
+import { Trash2, Link as LinkIcon, CaseSensitive } from "lucide-react";
 
-const DashboardItem = ({ item, isSelected }) => {
+const DashboardItem = ({ item, isSelected, renameAction }) => {
   // const { setDashId } = useContext(MyContext);
 
   let className =
@@ -34,7 +27,11 @@ const DashboardItem = ({ item, isSelected }) => {
           {isSelected && (
             <div className="flex">
               <MenuButton>
-                <MenuItem Icon={CaseSensitive} text="Rename" />
+                <MenuItem
+                  Icon={CaseSensitive}
+                  text="Rename"
+                  action={() => renameAction()}
+                />
                 {/* <MenuItem Icon={RotateCw} text="Refresh" /> */}
                 <MenuItem Icon={LinkIcon} text="Copy Link" />
                 <MenuItem Icon={Trash2} text="Delete" />

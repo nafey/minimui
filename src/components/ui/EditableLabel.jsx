@@ -2,8 +2,8 @@ import { useState, useRef, useEffect } from "react";
 // import LabeledInput from "./LabeledInput";
 import Input from "./Input";
 
-const EditableLabel = ({ text, onChange }) => {
-  const [isEditing, setEditing] = useState(false);
+const EditableLabel = ({ isEditing, setEditing, text, onChange }) => {
+  // const [isEditing, setEditing] = useState(false);
   const ref = useRef(null);
   const inputRef = useRef(null);
 
@@ -39,11 +39,25 @@ const EditableLabel = ({ text, onChange }) => {
     onChange(t);
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      const t = inputRef.current.value;
+
+      onChange(t);
+      setEditing(false);
+    }
+  };
+
   return (
     <div ref={ref}>
       {isEditing ? (
         // <LabeledInput value={text} onChange={() => {}} />
-        <Input passref={inputRef} value={text} onChange={handleChange} />
+        <Input
+          passref={inputRef}
+          value={text}
+          onChange={handleChange}
+          onKeyPress={handleKeyPress}
+        />
       ) : (
         <div className="w-56 px-2 py-1.5 cursor-text" onClick={onClick}>
           {text}
