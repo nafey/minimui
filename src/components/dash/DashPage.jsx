@@ -93,6 +93,19 @@ const DashPage = () => {
     }
   };
 
+  const deleteGraph = async (gId) => {
+    await fetch("/api/graphs/" + gId, {
+      method: "DELETE",
+    });
+
+    let dashData = await getDashboard(dashboardId);
+    let dashGraphs = dashData?.graphs ? dashData.graphs : [];
+
+    setDetails(dashData);
+    setGraphs(dashGraphs);
+    showToast("Deleted Graph", "success");
+  };
+
   useEffect(() => {
     (async () => {
       if (dashboardId) {
@@ -129,7 +142,9 @@ const DashPage = () => {
           />
         </div>
         {graphs.map((graph, i) => {
-          return <GraphContainer key={i} graph={graph} />;
+          return (
+            <GraphContainer key={i} graph={graph} deleteAction={deleteGraph} />
+          );
         })}
         <div className="flex justify-center w-32 text-neutral-300">
           <Link to={"/dashboard/" + dashboardId + "/addgraph/"}>

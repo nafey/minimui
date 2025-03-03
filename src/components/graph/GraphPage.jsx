@@ -49,7 +49,7 @@ const GraphPage = () => {
           onSave={onSave}
           actionText="Done"
         />
-        <GraphContainer graph={graph} />
+        <GraphContainer graph={graph} disableMenu={true} />
       </div>
     </div>
   );
