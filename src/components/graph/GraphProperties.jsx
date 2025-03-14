@@ -57,18 +57,20 @@ const GraphProperties = ({ graph, setGraph, onSave, actionText }) => {
       <div className="text-lg select-none">Graph Properties</div>
       <LabeledInput
         title={"Name"}
-        value={graph.name}
+        value={graph?.name}
+        // value={null}
         onChange={handleNameChange}
       />
       <Select
         title={"Event"}
-        value={graph.event}
+        value={graph?.event}
+        // value={null}
         values={eventList}
         onChange={handleEventChange}
       />
       <Select
         title={"Period"}
-        value={graph.period}
+        value={graph?.period}
         values={[
           ["DAILY", "Day"],
           ["HOURLY", "Hour"],
@@ -77,11 +79,15 @@ const GraphProperties = ({ graph, setGraph, onSave, actionText }) => {
         onChange={handlePeriodChange}
       />
       <div className="flex flex-row justify-end gap-4">
-        <Button
-          text={actionText ? actionText : "Save"}
-          outline={true}
-          onClick={handleSave}
-        />
+        {graph == null ? (
+          <></>
+        ) : (
+          <Button
+            text={actionText ? actionText : "Save"}
+            outline={true}
+            onClick={handleSave}
+          />
+        )}
       </div>
     </div>
   );

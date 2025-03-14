@@ -30,6 +30,7 @@ const HomePage = () => {
           return <HomePageItem key={i} dash={dash} />;
         })}
       </div>
+
     </div>
   );
 };
