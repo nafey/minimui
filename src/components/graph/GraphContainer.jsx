@@ -80,7 +80,7 @@ const GraphContainer = ({ graph, disableMenu, deleteAction }) => {
   //   return <div>Loading</div>;
   // }
 
-  let link = "/ui/dashboard/" + dashboardId + "/graph/" + id;
+  let link = "/dashboard/" + dashboardId + "/graph/" + id;
 
   return (
     <div className="flex flex-col gap-4 w-full h-72 border border-neutral-700 rounded-xl">
