@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 
 const HomePageItem = ({ dash }) => {
-  let path = "/dashboard/" + dash.id;
+  let path = "/ui/dashboard/" + dash.id;
 
   return (
     <Link to={path}>

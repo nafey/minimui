@@ -5,7 +5,7 @@ const NotFound = () => {
       <div className="p-32 text-xl">
         404: Not Found.
         <br /> Click here to go to{" "}
-        <Link to="/">
+        <Link to="/ui/">
           <a className="text-blue-800 underline">home</a>.
         </Link>{" "}
       </div>

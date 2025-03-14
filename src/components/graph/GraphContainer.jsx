@@ -73,13 +73,14 @@ const GraphContainer = ({ graph, disableMenu, deleteAction }) => {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [graph]);
 
   // if (!graph) {
   //   return <div>Loading</div>;
   // }
 
-  let link = "/dashboard/" + dashboardId + "/graph/" + id;
+  let link = "/ui/dashboard/" + dashboardId + "/graph/" + id;
 
   return (
     <div className="flex flex-col gap-4 w-full h-72 border border-neutral-700 rounded-xl">

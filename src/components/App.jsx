@@ -13,14 +13,14 @@ function App() {
     <ToastProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/dashboard/:dashboardId" element={<DashPage />} />
+          <Route path="/ui/" element={<HomePage />} />
+          <Route path="/ui/dashboard/:dashboardId" element={<DashPage />} />
           <Route
-            path="/dashboard/:dashboardId/graph/:graphId/"
+            path="/ui/dashboard/:dashboardId/graph/:graphId/"
             element={<GraphPage />}
           />
           <Route
-            path="/dashboard/:dashboardId/addgraph/"
+            path="/ui/dashboard/:dashboardId/addgraph/"
             element={<AddGraphPage />}
           />
           <Route path="*" element={<NotFound />} />

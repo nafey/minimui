@@ -30,7 +30,7 @@ const GraphPage = () => {
       body: JSON.stringify(graph),
     });
 
-    navigate("/dashboard/" + dashboardId);
+    navigate("/ui/dashboard/" + dashboardId);
   };
 
   return (
@@ -47,7 +47,7 @@ const GraphPage = () => {
             left={true}
             text={"Go Back to Dashboard"}
             onClick={() => {
-              navigate("/dashboard/" + dashboardId);
+              navigate("/ui/dashboard/" + dashboardId);
             }}
           />
         </div>

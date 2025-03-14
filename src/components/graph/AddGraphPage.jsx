@@ -27,7 +27,7 @@ const AddGraphPage = () => {
       body: JSON.stringify({ ...graph, dashboardId: parseInt(dashboardId) }),
     });
 
-    navigate("/dashboard/" + dashboardId);
+    navigate("/ui/dashboard/" + dashboardId);
   };
 
   return (
@@ -37,7 +37,7 @@ const AddGraphPage = () => {
           left={true}
           text={"Go Back to Dashboard"}
           onClick={() => {
-            navigate("/dashboard/" + dashboardId);
+            navigate("/ui/dashboard/" + dashboardId);
           }}
         />
       </div>
