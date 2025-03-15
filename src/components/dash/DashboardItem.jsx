@@ -17,7 +17,7 @@ const DashboardItem = ({ item, isSelected, renameAction, deleteAction }) => {
     className += " hover:bg-[#2D2D2D]/50";
   }
 
-  let path = "/ui/dashboard/" + item.id;
+  let path = "/dashboard/" + item.id;
   return (
     <Link to={path}>
       <li className={className} onClick={() => {}}>

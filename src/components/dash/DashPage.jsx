@@ -70,7 +70,7 @@ const DashPage = () => {
 
     let dashboards = await getDashboards();
     let dashId = dashboards[0].id;
-    navigate("/ui/dashboard/" + dashId);
+    navigate("/dashboard/" + dashId);
     showToast("Deleted dashboard", "success");
   };
 
@@ -88,7 +88,7 @@ const DashPage = () => {
     const out = await response.json();
     if (out && out.data && out.data.id) {
       let dashId = out.data.id;
-      navigate("/ui/dashboard/" + dashId);
+      navigate("/dashboard/" + dashId);
       showToast("Created New dashboard", "success");
     }
   };
@@ -147,7 +147,7 @@ const DashPage = () => {
           );
         })}
         <div className="flex justify-center w-32 text-neutral-300">
-          <Link to={"/ui/dashboard/" + dashboardId + "/addgraph/"}>
+          <Link to={"/dashboard/" + dashboardId + "/addgraph/"}>
             <Button text="+ Add Graph" />
           </Link>
         </div>

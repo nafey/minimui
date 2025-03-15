@@ -11,7 +11,7 @@ import {
   Legend,
 } from "chart.js";
 
-const MyLineChart = ({ count, labels }) => {
+const LineChart = ({ count, labels, eventName }) => {
   // Register the necessary components
   ChartJS.register(
     CategoryScale,
@@ -50,7 +50,7 @@ const MyLineChart = ({ count, labels }) => {
     labels: labels,
     datasets: [
       {
-        label: "My First Dataset",
+        label: eventName,
         data: count,
         fill: false,
         borderColor: "rgb(75, 192, 192)",
@@ -89,7 +89,9 @@ const MyLineChart = ({ count, labels }) => {
         ticks: {
           autoSkip: true,
           maxTicksLimit: 12,
+          maxRotation: 0,
           color: "white",
+          padding: 20,
         },
       },
       y: {
@@ -128,4 +130,4 @@ const MyLineChart = ({ count, labels }) => {
   );
 };
 
-export default MyLineChart;
+export default LineChart;
