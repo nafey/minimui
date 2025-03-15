@@ -4,12 +4,13 @@ import { useToast } from "../ui/ToastContext";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import MyLineChart from "./MyLineChart";
+import LineChart from "./LineChart";
 import MenuButton from "../ui/MenuButton";
 import MenuItem from "../ui/MenuItem";
 import { Pen, RotateCw, Trash2 } from "lucide-react";
 
 const GraphContainer = ({ graph, disableMenu, deleteAction }) => {
+  const [eventName, setEventName] = useState("");
   const [labels, setLabels] = useState([]);
   const [count, setCount] = useState([]);
   const navigate = useNavigate();
@@ -55,13 +56,60 @@ const GraphContainer = ({ graph, disableMenu, deleteAction }) => {
     const counts = data.map((item) => item.count);
     data = counts;
     data.reverse();
-
     setCount(data);
 
     const labels = [];
-    for (let i = 0; i < 60; i++) {
-      labels.push(i);
+    const now = new Date();
+
+    if (period == "HOURLY") {
+      for (let i = 59; i >= 0; i--) {
+        const date = new Date(now);
+        date.setHours(now.getHours() - i);
+
+        const month = date.toLocaleString("default", { month: "short" });
+        const day = date.getDate();
+        let hour = date.getHours();
+        const ampm = hour >= 12 ? "pm" : "am";
+        hour = hour % 12 || 12;
+
+        const formattedTime = `${month} ${day}, ${hour}${ampm}`;
+
+        labels.push(formattedTime);
+      }
+    } else if (period == "MINUTELY") {
+      for (let i = 59; i >= 0; i--) {
+        const date = new Date(now);
+        date.setMinutes(now.getMinutes() - i); // Subtract 'i' minutes from the current time
+
+        let hour = date.getHours();
+        const minutes = date.getMinutes();
+        const ampm = hour >= 12 ? "pm" : "am";
+        hour = hour % 12 || 12; // Convert to 12-hour format
+
+        const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+        const formattedTime = `${hour}:${formattedMinutes}${ampm}`;
+
+        labels.push(formattedTime);
+      }
+    } else if (period == "DAILY") {
+      for (let i = 59; i >= 0; i--) {
+        const date = new Date(now);
+        date.setDate(now.getDate() - i);
+
+        const month = date.toLocaleString("default", { month: "short" });
+        const day = date.getDate();
+
+        const formattedDate = `${month} ${day}`;
+
+        labels.push(formattedDate);
+      }
+    } else {
+      for (let i = 0; i < 60; i++) {
+        labels.push(i);
+      }
     }
+    setEventName(graph.event);
 
     setLabels(labels);
   };
@@ -118,7 +166,7 @@ const GraphContainer = ({ graph, disableMenu, deleteAction }) => {
           ></Skeleton>
         </div>
       ) : (
-        <MyLineChart count={count} labels={labels} />
+        <LineChart count={count} labels={labels} eventName={eventName} />
       )}
     </div>
   );
