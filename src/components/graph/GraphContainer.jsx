@@ -25,32 +25,18 @@ const GraphContainer = ({ graph, disableMenu, deleteAction }) => {
 
     let event = graph.event;
     let period = graph.period;
+    let length = graph.length;
 
-    let path = "";
-
-    if (period === "DAILY") {
-      path = "/api/stat/daily/";
-    } else if (period === "HOURLY") {
-      path = "/api/stat/hourly/";
-    } else if (period == "MINUTELY") {
-      path = "/api/stat/minutes/";
-    } else {
-      return;
-    }
-
-    const response = await fetch(path, {
+    const response2 = await fetch("/api/stat/", {
       method: "POST",
       body: JSON.stringify({
         event: event,
+        period: period,
+        length: length,
       }),
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const result = await response.json();
-
+    let result = await response2.json();
     let data = result.data;
 
     const counts = data.map((item) => item.count);
@@ -62,7 +48,7 @@ const GraphContainer = ({ graph, disableMenu, deleteAction }) => {
     const now = new Date();
 
     if (period == "HOURLY") {
-      for (let i = 59; i >= 0; i--) {
+      for (let i = length - 1; i >= 0; i--) {
         const date = new Date(now);
         date.setHours(now.getHours() - i);
 
@@ -77,7 +63,7 @@ const GraphContainer = ({ graph, disableMenu, deleteAction }) => {
         labels.push(formattedTime);
       }
     } else if (period == "MINUTELY") {
-      for (let i = 59; i >= 0; i--) {
+      for (let i = length - 1; i >= 0; i--) {
         const date = new Date(now);
         date.setMinutes(now.getMinutes() - i); // Subtract 'i' minutes from the current time
 
@@ -87,13 +73,12 @@ const GraphContainer = ({ graph, disableMenu, deleteAction }) => {
         hour = hour % 12 || 12; // Convert to 12-hour format
 
         const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-
         const formattedTime = `${hour}:${formattedMinutes}${ampm}`;
 
         labels.push(formattedTime);
       }
     } else if (period == "DAILY") {
-      for (let i = 59; i >= 0; i--) {
+      for (let i = length - 1; i >= 0; i--) {
         const date = new Date(now);
         date.setDate(now.getDate() - i);
 
@@ -123,10 +108,6 @@ const GraphContainer = ({ graph, disableMenu, deleteAction }) => {
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [graph]);
-
-  // if (!graph) {
-  //   return <div>Loading</div>;
-  // }
 
   let link = "/dashboard/" + dashboardId + "/graph/" + id;
 

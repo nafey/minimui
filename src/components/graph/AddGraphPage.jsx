@@ -12,6 +12,7 @@ const AddGraphPage = () => {
     name: "New Graph",
     event: "",
     period: "DAILY",
+    length: 60,
   });
 
   useEffect(() => {}, [dashboardId]);
