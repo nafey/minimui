@@ -11,7 +11,7 @@ const AddGraphPage = () => {
   const [graph, setGraph] = useState({
     name: "New Graph",
     event: "",
-    period: "DAILY",
+    period: "MINUTELY",
     length: 60,
   });
 

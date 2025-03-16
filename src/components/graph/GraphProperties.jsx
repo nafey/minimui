@@ -85,7 +85,8 @@ const GraphProperties = ({ graph, setGraph, onSave, actionText }) => {
   };
 
   const getPeriodSelectVal = () => {
-    if (!graph) return null;
+    if (!graph) return "1DAY";
+
     let period = graph.period;
     let length = graph.length;
 
@@ -110,6 +111,8 @@ const GraphProperties = ({ graph, setGraph, onSave, actionText }) => {
         return "1YEAR";
       }
     }
+
+    return "1HOUR";
   };
 
   return (
